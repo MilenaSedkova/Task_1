@@ -1,3 +1,95 @@
-﻿Console.WriteLine("Введите первое число");
-int firstNumber=int.Parse(Console.ReadLine());
-Console.WriteLine("Введите второе число");
+﻿using System.Reflection.Metadata.Ecma335;
+string choice;
+do
+{
+    Console.WriteLine("Введите первое число");
+    double firstNumber = InputOfNumber();
+    Console.WriteLine("Введите операцию, которую хотите провести с числами(+, -, *, /)");
+    string operation = InputOfOperation();
+    Console.WriteLine("Введите второе число");
+    double secondNumber = InputOfNumber();
+    switch (operation)
+    {
+        case "+":
+            double result1 = firstNumber + secondNumber;
+            Console.WriteLine($"Результат: {result1}");
+            break;
+        case "-":
+            double result2 = firstNumber - secondNumber;
+            Console.WriteLine($"Результат: {result2}");
+            break;
+        case "*":
+            double result3 = firstNumber * secondNumber;
+            Console.WriteLine($"Результат: {result3}");
+            break;
+        case "/":
+            if (secondNumber == 0)
+            {
+                DivisionByZero(secondNumber);
+            }
+            else
+            {
+                double result4 = firstNumber / secondNumber;
+                Console.WriteLine(result4);
+            }
+            break;
+    }
+
+    Console.WriteLine("Хотите ли Вы выполнить еще одну операцию?(да/нет)");
+    choice = Console.ReadLine().ToLower().Trim();
+} while (choice == "да"); 
+Console.WriteLine("Для выхода из калькулятора нажмите любую клавишу");
+    static int InputOfNumber()
+    {
+        string input;
+        int number = 0;
+        do
+        {
+            input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+            {
+
+                Console.WriteLine("Ошибка! Вы ничего не ввели, попробуйте еще раз");
+                continue;
+            }
+            if (!int.TryParse(input, out number))
+            {
+                Console.WriteLine("Ошибка! Вы ввели не число, попробуйте еще раз");
+                continue;
+            }
+            return number;
+        }
+        while (true);
+    }
+    static string InputOfOperation()
+    {
+        string input;
+        char symbol;
+        do
+        {
+            input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine("Ошибка! вы ничего не ввели, попробуйте еще раз");
+                continue;
+            }
+            symbol = input[0];
+            if (symbol != '+' && symbol != '-' && symbol != '*' && symbol != '/')
+            {
+                Console.WriteLine("Вы ввели не правильную арифметическую операцию, попробуйте еще раз");
+                continue;
+            }
+            return input;
+        } while (true);
+    }
+static double DivisionByZero(double second)
+{
+    do
+    {
+        if (second == 0)
+        {
+            Console.WriteLine("Ошибка! Делить на ноль нельзя!");
+        }
+        return second;
+    } while (second==0);
+}
